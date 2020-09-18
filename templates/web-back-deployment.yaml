@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.7.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: web-back
+  name: web-back
+  namespace: calipsoplus
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: web-back
+    spec:
+      containers:
+        - args:
+            - bash
+            - -c
+            - python manage.py migrate && gunicorn calipsoplus.wsgi -b 0:8000
+          image: eosc-pan-git.desy.de:5555/calipsoplus/portal-kubernetes/web-back:latest
+          name: django01
+          resources: {}
+      imagePullSecrets:
+        - name: calipsoplus-registry-key
+      restartPolicy: Always
+status: {}

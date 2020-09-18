@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.7.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: web-front
+  name: web-front
+  namespace: calipsoplus
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: web-front
+    spec:
+      containers:
+        - args:
+            - npm
+            - start
+          image: eosc-pan-git.desy.de:5555/calipsoplus/portal-kubernetes/web-front:latest
+          name: angular01
+          resources: {}
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: calipsoplus-registry-key
+status: {}

@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: calipso-portal
+  namespace: calipsoplus
+  labels:
+    component: ingress
+    app: calipso-portal
+    release: calipso
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+spec:
+  rules:
+    - host: "calipsoplus.desy.de"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: frontend
+              servicePort: 8001
+          - path: /services/
+            backend:
+              serviceName: backend
+              servicePort: 8000
+          - path: /guac/
+            backend:
+              serviceName: guacamole
+              servicePort: 8080
+  tls:
+    - hosts:
+      - calipsoplus.desy.de
+      secretName: calipsoplus-tls-secret
+

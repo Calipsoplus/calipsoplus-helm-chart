@@ -1,0 +1,24 @@
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: calipsoplus-role
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["list", "create", "delete"]
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: pods-list
+subjects:
+- kind: ServiceAccount
+  name: calipsoplus-account
+  namespace: calipsoplus
+roleRef:
+  kind: Role
+  name: calipsoplus-role
+  apiGroup: rbac.authorization.k8s.io
+
+

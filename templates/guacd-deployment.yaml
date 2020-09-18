@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.7.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: guacd
+  name: guacd
+  namespace: calipsoplus
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: guacd
+    spec:
+      containers:
+        - image: guacamole/guacd:1.0.0
+          name: guacd01
+          ports:
+            - containerPort: 4822
+          resources: {}
+      restartPolicy: Always
+status: {}

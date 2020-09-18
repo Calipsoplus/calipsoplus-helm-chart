@@ -1,0 +1,58 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.7.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: calipsodb
+  name: calipsodb
+  namespace: calipsoplus
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: calipsodb
+    spec:
+      containers:
+        - args:
+            - mysqld
+            - --default-authentication-plugin=mysql_native_password
+          env:
+            - name: MYSQL_DATABASE
+              value: calipsoplus
+            - name: MYSQL_PASSWORD
+              value: admincamps
+            - name: MYSQL_ROOT_PASSWORD
+              value: pass
+            - name: MYSQL_USER
+              value: admin
+          image: eosc-pan-git.desy.de:5555/calipsoplus/portal-kubernetes/db-calipso:latest
+          name: calipso-mysql
+          ports:
+            - containerPort: 3306
+          resources: {}
+          volumeMounts:
+            - name: db-storage
+              mountPath: /var/lib/mysql
+            - name: db-scripts
+              mountPath: /docker-entrypoint-initdb.d/
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: calipsoplus-registry-key
+      volumes:
+        - name: db-storage
+          persistentVolumeClaim:
+            claimName: calipsodb-claim0
+        - name: db-scripts
+          configMap:
+            name: calipsodb-scripts
+            items:
+              - key: calipsoplus.sql
+                path: dump.sql
+status: {}

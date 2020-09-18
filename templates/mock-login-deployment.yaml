@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.7.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mock-login
+  name: mock-login
+  namespace: calipsoplus
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: mock-login
+    spec:
+      containers:
+      - image: eosc-pan-git.desy.de/calipsoplus/portal-kubernetes/mock-login:latest
+        name: mocklogin01
+        ports:
+        - containerPort: 8000
+        resources: {}
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: calipsoplus-registry-key
+status: {}

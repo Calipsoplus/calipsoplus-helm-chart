@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.7.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: web-back
+  name: web-back
+  namespace: calipsoplus
+spec:
+  type: ClusterIP
+  ports:
+  - name: backend
+    port: 8000
+    targetPort: 8000
+  selector:
+    io.kompose.service: web-back
+status:
+  loadBalancer: {}
