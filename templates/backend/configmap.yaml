@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: calipsodb-scripts
+  labels: {{ include "calipsoplus-portal.labels" . | nindent 4 }}
+data:
+  default.cnf:
+    [client]
+    database = {{ .Values.calipsoplus.db.name }}
+    host = calipsoplus-db
+    port = {{ .Values.calipsoplus.db.port }}
+    user = {{ .Values.calipsoplus.db.mysqlUser }}
+    password = {{ .Values.calipsoplus.db.mysqlPassword }}
+    default-character-set = utf8
+    
+    

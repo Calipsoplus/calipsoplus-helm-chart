@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: Secret
-metadata:
-  name: calipsoplus-registry-key
-data:
-  .dockerconfigjson: ewoJImF1dGhzIjogewoJCSJlb3NjLXBhbi1naXQuZGVzeS5kZTo1NTU1IjogewoJCQkiYXV0aCI6ICJhbTlvWVc1dVpYTXVjbVZ3Y0dsdU9raHpjMWRTUjFsamVHZ3hlRlJpU0RKQlRIWlUiCgkJfQoJfSwKCSJIdHRwSGVhZGVycyI6IHsKCQkiVXNlci1BZ2VudCI6ICJEb2NrZXItQ2xpZW50LzE5LjAzLjUgKGxpbnV4KSIKCX0KfQo=
-type: kubernetes.io/dockerconfigjson
