@@ -20,5 +20,5 @@ spec:
           resources: {}
       restartPolicy: Always
       imagePullSecrets:
-        - name: calipsoplus-registry-key
+        - name: calipsoplus-registry-secret
 status: {}

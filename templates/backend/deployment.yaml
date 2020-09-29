@@ -15,11 +15,11 @@ spec:
         - args:
             - bash
             - -c
-            - python manage.py migrate && gunicorn calipsoplus.wsgi -b 0:8000
-          image: "{{ .Values.calipsoplus.backendImage.repository }}:{{ .Values.calipsoplus.backendImage.tag || .Chart.AppVersion }}"
+            - python manage.py migrate && gunicorn calipsoplus.wsgi -b 0:{{ .Values.calipsoplus.backend.targetPort }}
+          image: "{{ .Values.calipsoplus.backend.image.repository }}:{{ .Values.calipsoplus.backend.image.tag || .Chart.AppVersion }}"
           name: django01
           resources: {}
       imagePullSecrets:
-        - name: calipsoplus-registry-key
+        - name: calipsoplus-registry-secret
       restartPolicy: Always
 status: {}

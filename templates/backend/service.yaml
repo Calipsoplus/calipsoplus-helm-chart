@@ -7,8 +7,9 @@ spec:
   type: ClusterIP
   ports:
   - name: backend
-    port: 8000
-    targetPort: 8000
+    port: {{ .Values.calipsoplus.backend.port }}
+    targetPort: {{ .Values.calipsoplus.backend.targetPort }}
   selector:
+   {{ include "calipsoplus-portal.selectorLabels" . | nindent 4 }}
 status:
   loadBalancer: {}

@@ -38,7 +38,7 @@ spec:
               mountPath: /docker-entrypoint-initdb.d/
       restartPolicy: Always
       imagePullSecrets:
-        - name: calipsoplus-registry-key
+        - name: calipsoplus-registry-secret
       volumes:
         - name: db-storage
           persistentVolumeClaim:

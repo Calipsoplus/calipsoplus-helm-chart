@@ -13,16 +13,23 @@ nameOverride: ""
 fullnameOverride: ""
 
 calipsoplus:
-  backendImage:
-    repository: eosc-pan-git.desy.de:5555/calipsoplus/portal-kubernetes/web-back
-    pullPolicy: IfNotPresent
-    # Overrides the image tag whose default is the chart appVersion.
-    tag: ""
-  frontendImage:
-    repository: eosc-pan-git.desy.de:5555/calipsoplus/portal-kubernetes/web-front
-    pullPolicy: IfNotPresent
-    # Overrides the image tag whose default is the chart appVersion.
-    tag: ""
+  backend:
+    image:
+      repository: eosc-pan-git.desy.de:5555/calipsoplus/portal-kubernetes/web-back
+      pullPolicy: IfNotPresent
+      # Overrides the image tag whose default is the chart appVersion.
+      tag: ""
+    port: 8001
+    targetPort: 8001
+  frontend:
+     url: example.com
+     image:
+       repository: eosc-pan-git.desy.de:5555/calipsoplus/portal-kubernetes/web-front
+       pullPolicy: IfNotPresent
+       # Overrides the image tag whose default is the chart appVersion.
+       tag: ""
+    port: 8000
+    targetPort: 8000
   db: 
     image:
       repository: eosc-pan-git.desy.de:5555/
@@ -35,6 +42,7 @@ calipsoplus:
     client:
       id: calipsoplus-example
       secret: 'totally-secret'
+      url: 'keycloak.example.com'
       authEndpoint: '../auth'
       tokenEndpoint: '../token'
       userEndpoint: '../userinfo'
@@ -45,6 +53,10 @@ calipsoplus:
   docker:
     host: 'calipso-docker-host.example.com'
     port: '2375'
+
+jupyterhub:
+  enabled: false
+  url: 'jupyter.example.com'
 
 guacamole:
   db:

@@ -15,8 +15,8 @@ export const environment = {
   },
   auth: {
     oidc: {
-      enabled: true,
-      url: 'https://example.com/oidc/authenticate'
+      enabled: {{ .Values.calipsoplus.oidc.enabled }},
+      url: {{ .Values.calipsoplus.oidc.url | quote }}
     },
     useroffice: {
       enabled: false,
@@ -24,7 +24,7 @@ export const environment = {
    }
   },
   frontend: {
-    url: 'https://calipsoplus.desy.de/',
+    url: {{ .Values.calipsoplus.frontend.url | quote }},
     facilityLogo: 'assets/images/logo.jpg'
   },
   env : 'kubernetes'
