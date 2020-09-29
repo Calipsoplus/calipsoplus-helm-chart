@@ -15,7 +15,6 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: calipsoplus-account
-  namespace: calipsoplus
 roleRef:
   kind: Role
   name: calipsoplus-role

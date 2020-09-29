@@ -2,19 +2,14 @@ apiVersion: v1
 kind: Service
 metadata:
   annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.7.0 (HEAD)
   creationTimestamp: null
   labels:
-    io.kompose.service: guacamoledb
   name: guacamoledb
-  namespace: calipsoplus
 spec:
   ports:
     - name: "3307"
       port: 3307
       targetPort: 3306
   selector:
-    io.kompose.service: guacamoledb
 status:
   loadBalancer: {}

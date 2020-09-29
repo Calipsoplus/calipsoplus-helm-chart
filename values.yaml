@@ -10,9 +10,40 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
-imagePullSecrets: []
+imagePullSecrets:
+  registry: eosc-pan-git.desy.de:5555
+  username: johannes.reppin
+  password: BYty9czkkfp1bAoibPSA
+  email: johannes.reppin@desy.de
 nameOverride: ""
 fullnameOverride: ""
+
+calipsoplus:
+  oidc: 
+    enabled: true
+    client:
+      id: calipsoplus-portal
+      secret: '3f3ce8d7-b8f2-4f44-b4de-15776917ad1d'
+      authEndpoint: '../auth'
+      tokenEndpoint: '../token'
+      userEndpoint: '../userinfo'
+      jwksEndpoint: '../certs'
+      signAlgorithm: 'HS256'
+  redirectUrl: 'https://calipsoplus.desy.de/navigation'
+  logoutUrl: 'https://calipsoplus.desy.de'
+  docker:
+    host: 'calipso-docker-host.desy.de'
+    port: '2375'
+
+guacamole:
+  db:
+    name:  guacamole
+    mysqlUser: guac
+    mysqlPassword: guacamole
+    rootPassword: guacadmin
+    image:
+      repository: mysql
+      tag: '5.7'
 
 serviceAccount:
   # Specifies whether a service account should be created

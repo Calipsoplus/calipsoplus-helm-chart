@@ -1,23 +1,20 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.7.0 (HEAD)
-  creationTimestamp: null
-  labels:
-    io.kompose.service: guacamoledb
   name: guacamoledb
-  namespace: calipsoplus
+  labels: {{ include "calipsoplus-portal.labels" . | nindent 4 }}
 spec:
   replicas: 1
   strategy:
     type: Recreate
   template:
     metadata:
-      creationTimestamp: null
       labels:
-        io.kompose.service: guacamoledb
+        {{- include "calipsoplus-portal.selectorLabels" . | nindent 8 }}
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- . | toYaml | trim | nindent 8 }}
+      {{- end }}
     spec:
       containers:
       - args:
@@ -25,14 +22,14 @@ spec:
           - "--default-authentication-plugin=mysql_native_password"
         env:
           - name: MYSQL_DATABASE
-            value: guacdb
-          - name: MYSQL_PASSWORD
-            value: admincamps
-          - name: MYSQL_ROOT_PASSWORD
-            value: pass
+            value: {{ .Values.guacamole.db.name | quote }}
           - name: MYSQL_USER
-            value: admin
-        image: mysql:5.7
+            value: {{ .Values.guacamole.db.mysqlUser | quote }}
+          - name: MYSQL_PASSWORD
+            value: {{ .Values.guacamole.db.mysqlPassword | quote }}
+          - name: MYSQL_ROOT_PASSWORD
+            value: {{ .Values.guacamole.db.rootPassword | quote }}
+        image: "{{ .Values.guacamole.db.image.repository }}:{{ .Values.guacamole.db.image.tag }}"
         name: guacd-mysql0
         ports:
           - containerPort: 3306

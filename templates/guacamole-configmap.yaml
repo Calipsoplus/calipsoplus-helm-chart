@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: guacamole-script
-  namespace: calipsoplus
+  labels: {{ include "calipsoplus-portal.labels" . | nindent 4 }}
 data:
   guac_access.html: | 
     <!DOCTYPE HTML> <html> <head> <title>guacmole tunnel</title> </head> <script> function gup( name, url ) {

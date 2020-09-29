@@ -1,11 +1,8 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  creationTimestamp: null
-  labels:
-    io.kompose.service: guacamoledb-claim0
   name: guacamoledb-claim0
-  namespace: calipsoplus
+  labels: {{ include "calipsoplus-portal.labels" . | nindent 4 }}
 spec:
   accessModes:
   - ReadWriteOnce

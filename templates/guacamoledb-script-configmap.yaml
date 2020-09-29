@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: guacamoledb-scripts
-  namespace: calipsoplus
+  labels: {{ include "calipsoplus-portal.labels" . | nindent 4 }}
 data:
   guacamole.sql: |
     -- 

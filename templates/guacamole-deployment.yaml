@@ -1,14 +1,8 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.7.0 (HEAD)
-  creationTimestamp: null
-  labels:
-    io.kompose.service: guacamole
   name: guacamole01  
-  namespace: calipsoplus
+  labels: {{ include "calipsoplus-portal.labels" . | nindent 4 }}
 spec:
   replicas: 1
   strategy:
@@ -17,24 +11,23 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.service: guacamole
     spec:
       containers:
         - env:
             - name: DATABASE_PORT
-              value: "3306"
+              value: {{ .Values.guacamole.db.port | quote }}
             - name: GUACD_HOSTNAME
               value: guacd
             - name: GUACD_PORT
-              value: "4822"
+              value: {{ .Values.guacd.port | quote }}
             - name: MYSQL_DATABASE
-              value: guacdb
+              value: {{ .Values.guacamole.db.name }}
             - name: MYSQL_HOSTNAME
               value: db-guacamole
             - name: MYSQL_PASSWORD
-              value: admincamps
+              value: {{ .Values.guacamole.db.mysqlPassword }}
             - name: MYSQL_USER
-              value: admin
+              value: {{ .Values.guacamole.db.mysqlUser }}
           image: guacamole/guacamole:1.0.0
           name: guacamole01
           ports:
