@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: web-front
+  name: frontend
   labels: {{ include "calipsoplus-portal.labels" . | nindent 4 }}
 spec:
   replicas: 1
@@ -15,7 +15,7 @@ spec:
         - args:
             - npm
             - start
-          image: eosc-pan-git.desy.de:5555/calipsoplus/portal-kubernetes/web-front:latest
+          image: "{{ .Values.calipsoplus.frontendImage.repository }}:{{ .Values.calipsoplus.frontendImage.tag || .Chart.AppVersion }}"
           name: angular01
           resources: {}
       restartPolicy: Always

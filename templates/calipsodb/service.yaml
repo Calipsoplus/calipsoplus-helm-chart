@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: calipsodb
+  labels: {{ include "calipsoplus-portal.labels" . | nindent 4 }}
+spec:
+  ports:
+    - name: database
+      port: {{ .Values.calipsplus.db.port }} 
+      targetPort: {{ .Values.calipsoplus.db.targetPort }}
+  selector:
+   {{ include "calipsoplus-portal.selectorLabels" . | nindent 4 }}
+status:
+  loadBalancer: {}

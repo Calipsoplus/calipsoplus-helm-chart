@@ -1,0 +1,34 @@
+# values for calipsoplus-portal.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+imagePullSecrets:
+  registry: eosc-pan-git.desy.de:5555
+  username: johannes.reppin
+  password: BYty9czkkfp1bAoibPSA
+  email: johannes.reppin@desy.de
+
+calipsoplus:
+  oidc: 
+    enabled: true
+    client:
+      id: calipsoplus-portal
+      secret: '3f3ce8d7-b8f2-4f44-b4de-15776917ad1d'
+  redirectUrl: 'https://calipsoplus.desy.de/navigation'
+  logoutUrl: 'https://calipsoplus.desy.de'
+  docker:
+    host: 'calipso-docker-host.desy.de'
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx-lb
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: calipsoplus.desy.de
+      # paths are hardcoded in ingress.yaml
+      paths: []
+  tls:
+   - secretName: calipsoplus-ingress-tls
+     hosts:
+       - calipsoplus.desy.de

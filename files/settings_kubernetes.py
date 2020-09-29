@@ -19,10 +19,10 @@ LOGGING['loggers']['django_cron']['handlers'] = ['console']
 LOGGING['loggers']['apprest']['handlers'] = ['console']
 
 # backend
-BACKEND_CALIPSO = "web-back"
+BACKEND_CALIPSO = "backend"
 
 # frontend
-FRONTEND_CALIPSO = "web-front"
+FRONTEND_CALIPSO = "frontend"
 
 # umbrella_logout
 UMBRELLA_LOGOUT = BACKEND_CALIPSO + "/Shibboleth.sso/Logout?return=" + FRONTEND_CALIPSO

@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: web-back
+  name: backend
   labels: {{ include "calipsoplus-portal.labels" . | nindent 4 }}
 spec:
   replicas: 1
@@ -16,7 +16,7 @@ spec:
             - bash
             - -c
             - python manage.py migrate && gunicorn calipsoplus.wsgi -b 0:8000
-          image: eosc-pan-git.desy.de:5555/calipsoplus/portal-kubernetes/web-back:latest
+          image: "{{ .Values.calipsoplus.backendImage.repository }}:{{ .Values.calipsoplus.backendImage.tag || .Chart.AppVersion }}"
           name: django01
           resources: {}
       imagePullSecrets:

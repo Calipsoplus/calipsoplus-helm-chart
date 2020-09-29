@@ -4,35 +4,46 @@
 
 replicaCount: 1
 
-image:
-  repository: nginx
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
-
 imagePullSecrets:
-  registry: eosc-pan-git.desy.de:5555
-  username: johannes.reppin
-  password: BYty9czkkfp1bAoibPSA
-  email: johannes.reppin@desy.de
+  registry:
+  username: 
+  password:
+  email:
 nameOverride: ""
 fullnameOverride: ""
 
 calipsoplus:
+  backendImage:
+    repository: eosc-pan-git.desy.de:5555/calipsoplus/portal-kubernetes/web-back
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+  frontendImage:
+    repository: eosc-pan-git.desy.de:5555/calipsoplus/portal-kubernetes/web-front
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+  db: 
+    image:
+      repository: eosc-pan-git.desy.de:5555/
+      pullPolicy: IfNotPresent
+      tag: ""
+    port: 3306
+    targetPort: 3307
   oidc: 
-    enabled: true
+    enabled: false
     client:
-      id: calipsoplus-portal
-      secret: '3f3ce8d7-b8f2-4f44-b4de-15776917ad1d'
+      id: calipsoplus-example
+      secret: 'totally-secret'
       authEndpoint: '../auth'
       tokenEndpoint: '../token'
       userEndpoint: '../userinfo'
       jwksEndpoint: '../certs'
       signAlgorithm: 'HS256'
-  redirectUrl: 'https://calipsoplus.desy.de/navigation'
-  logoutUrl: 'https://calipsoplus.desy.de'
+  redirectUrl: 'https://calipsoplus.example.com/navigation'
+  logoutUrl: 'https://calipsoplus.example.com'
   docker:
-    host: 'calipso-docker-host.desy.de'
+    host: 'calipso-docker-host.example.com'
     port: '2375'
 
 guacamole:
@@ -43,7 +54,20 @@ guacamole:
     rootPassword: guacadmin
     image:
       repository: mysql
-      tag: '5.7'
+      tag: '5.7.31'
+    port: 3306
+    targetPort: 3307
+  image: 
+    repository: guacamole/guacamole
+    tag: 1.2.0
+  port:
+  targetPort:
+guacd:
+  image:
+    repository: guacamole/guacd
+    tag: 1.2.0
+  port: 4822
+  targetPort: 4822
 
 serviceAccount:
   # Specifies whether a service account should be created
