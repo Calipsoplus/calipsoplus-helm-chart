@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mock-login
+  name: mocklogin
   labels: {{ include "calipsoplus-portal.labels" . | nindent 4 }}
 spec:
   ports:
-    - name: "8002"
-      port: 8002
-      targetPort: 8000
+    - name: login
+      port: {{ .Values.mocklogin.port }}
+      targetPort: {{ .Values.mocklogin.targetPort }}
   selector:
 status:
   loadBalancer: {}

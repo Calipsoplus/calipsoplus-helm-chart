@@ -29,7 +29,7 @@ spec:
               value: {{ .Values.calipsoplus.db.rootPassword }}
             - name: MYSQL_USER
               value: {{ .Values.calipsoplus.db.mysqlUser }}
-          image: eosc-pan-git.desy.de:5555/calipsoplus/portal-kubernetes/db-calipso:latest
+          image: "{{ .Values.calipsoplus.db.image.registry }}:{{ .Values.calipsoplus.db.image.tag }}"
           name: calipso-mysql
           ports:
             - containerPort: 3306

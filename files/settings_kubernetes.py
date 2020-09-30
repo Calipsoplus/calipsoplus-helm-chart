@@ -31,13 +31,13 @@ UMBRELLA_LOGOUT = BACKEND_CALIPSO + "/Shibboleth.sso/Logout?return=" + FRONTEND_
 UMBRELLA_LOGIN = BACKEND_CALIPSO + "/Shibboleth.sso/Login?target=" + BACKEND_CALIPSO + "/calipsoplus-services/umbrella/frontend/"
 
 # User Office backend API login
-BACKEND_UO_LOGIN = "http://mock-login:8000/login/"
-BACKEND_UO_HASH = "http://mock-login:80000/login/umbrella/"
-BACKEND_UO_IS_AUTHORIZED = "http://mock-login:8000/is_staff/"
+BACKEND_UO_LOGIN = "http://mocklogin:{{ .Values.mocklogin.port }}/login/"
+BACKEND_UO_HASH = "http://mocklogin:{{ .Values.mocklogin.port }}/login/umbrella/"
+BACKEND_UO_IS_AUTHORIZED = "http://mocklogin:{{ .Values.mocklogin.port }}/is_staff/"
 
 # which indicates the REST endpoint to be connected against, if the DYNAMIC_EXPERIMENTS_DATA_RETRIEVAL flag is set to 1.
 # Note: endpoint should contain: login, number of items (pagination), offset (from and to), and keyword (optional)
-DYNAMIC_EXPERIMENTS_DATA_RETRIEVAL_ENDPOINT = "http://mock-login:8000/experiments/$USERNAME/"
+DYNAMIC_EXPERIMENTS_DATA_RETRIEVAL_ENDPOINT = "http://mocklogin:{{ .Values.mocklogin.port }}/experiments/$USERNAME/"
 
 #database
 DATABASES = {

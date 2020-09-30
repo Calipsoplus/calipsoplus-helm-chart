@@ -84,6 +84,12 @@ guacd:
     tag: '0.9.14'
   port: 4822
   targetPort: 4822
+mocklogin:
+  image: 
+    registry: eosc-pan-git.desy.de:5555/calipsoplus/mock-login
+    tag: ""
+  port: 8000
+  targetPort: 8080
 
 serviceAccount:
   # Specifies whether a service account should be created

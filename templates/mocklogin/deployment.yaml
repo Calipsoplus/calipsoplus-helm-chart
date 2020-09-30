@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mock-login
+  name: mocklogin
   labels: {{ include "calipsoplus-portal.labels" . | nindent 4 }}
 spec:
   replicas: 1
@@ -14,10 +14,10 @@ spec:
         {{- include "calipsoplus-portal.matchLabels" . | nindent 8 }}
     spec:
       containers:
-      - image: eosc-pan-git.desy.de/calipsoplus/portal-kubernetes/mock-login:latest
+      - image: "{{ .Values.mocklogin.image.registry }}:{{ .Values.mocklogin.image.tag | default .Chart.AppVersion }}"
         name: mocklogin
         ports:
-        - containerPort: 8000
+        - containerPort: {{ .Values.mocklogin.targetPort }}
         resources: {}
       restartPolicy: Always
       imagePullSecrets:
