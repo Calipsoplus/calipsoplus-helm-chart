@@ -7,6 +7,9 @@ spec:
   replicas: 1
   strategy:
     type: Recreate
+  selector:
+    matchLabels:
+      {{- include "calipsoplus-portal.matchLabels" . | nindent 6 }}
   template:
     metadata:
       creationTimestamp: null
@@ -21,11 +24,11 @@ spec:
             - name: MYSQL_DATABASE
               value: calipsoplus
             - name: MYSQL_PASSWORD
-              value: admincamps
+              value: {{ .Values.calipsoplus.db.mysqlPassword }}
             - name: MYSQL_ROOT_PASSWORD
-              value: pass
+              value: {{ .Values.calipsoplus.db.rootPassword }}
             - name: MYSQL_USER
-              value: admin
+              value: {{ .Values.calipsoplus.db.mysqlUser }}
           image: eosc-pan-git.desy.de:5555/calipsoplus/portal-kubernetes/db-calipso:latest
           name: calipso-mysql
           ports:

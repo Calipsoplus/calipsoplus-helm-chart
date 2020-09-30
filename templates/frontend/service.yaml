@@ -8,7 +8,7 @@ spec:
   ports:
     - name: frontend
       port: {{ .Values.calipsoplus.frontend.port }}
-      targetPort: {{ .Values.calipsoplus.frontent.targetPort }}
+      targetPort: {{ .Values.calipsoplus.frontend.targetPort }}
   selector:
    {{ include "calipsoplus-portal.selectorLabels" . | nindent 4 }}
 status:

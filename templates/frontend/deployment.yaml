@@ -6,19 +6,44 @@ metadata:
 spec:
   replicas: 1
   strategy: {}
+  selector:
+    matchLabels:
+      {{- include "calipsoplus-portal.matchLabels" . | nindent 6 }}
   template:
     metadata:
-      creationTimestamp: null
       labels:
+        {{- include "calipsoplus-portal.matchLabels" . | nindent 8 }}
     spec:
       containers:
         - args:
             - npm
             - start
-          image: "{{ .Values.calipsoplus.frontendImage.repository }}:{{ .Values.calipsoplus.frontendImage.tag || .Chart.AppVersion }}"
+          image: "{{ .Values.calipsoplus.frontend.image.repository }}:{{ .Values.calipsoplus.frontend.image.tag | default .Chart.AppVersion }}"
           name: angular01
           resources: {}
+          ports: 
+            - name: http
+              containerPort: {{ .Values.calipsoplus.frontend.targetPort }}
+          volumeMounts:
+            - name: assets
+              mountPath: /assets/
+            - name: environment
+              mountPath: /src/environments/
       restartPolicy: Always
       imagePullSecrets:
         - name: calipsoplus-registry-secret
+      nodeSelector: {{ toJson .Values.calipsoplus.frontend.nodeSelector }}
+      volumes:
+        - name: assets
+          configMap:
+            name: frontend-assets-cm
+            items:
+              - key: logo.jpg
+                path: logo.jpg
+        - name: environment-cm
+          configMap:
+            name: frontend-environment-cm
+            items:
+              - key: environment.kubernetes.ts
+                path: environment.ts
 status: {}

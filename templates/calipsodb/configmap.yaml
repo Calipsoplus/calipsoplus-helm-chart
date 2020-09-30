@@ -2,11 +2,13 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: calipsodb-scripts
+  labels: 
+    {{- include "calipsoplus-portal.labels" . | nindent 4 }}
 data:
   calipsoplus.sql: | 
-    DROP DATABASE IF EXISTS calipsoplus;
-    CREATE DATABASE calipsoplus;
-    USE calipsoplus;
+    DROP DATABASE IF EXISTS {{ .Values.calipsoplus.db.database }};
+    CREATE DATABASE {{ .Values.calipsoplus.db.database }};
+    USE {{ .Values.calipsoplus.db.database }};
   001-create-schema.sql: |
     --
     -- Licensed to the Apache Software Foundation (ASF) under one

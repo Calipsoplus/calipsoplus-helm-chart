@@ -1,14 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend
+  name: guacamoledb
   labels: {{ include "calipsoplus-portal.labels" . | nindent 4 }}
 spec:
-  type: ClusterIP
   ports:
-    - name: backend
-      port: {{ .Values.calipsoplus.backend.port }}
-      targetPort: {{ .Values.calipsoplus.backend.targetPort }}
+    - name: guacamoledb
+      port: {{ .Values.guacamole.db.port }}
+      targetPort: {{ .Values.guacamole.db.targetPort }}
   selector:
    {{ include "calipsoplus-portal.selectorLabels" . | nindent 4 }}
 status:

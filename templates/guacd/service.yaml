@@ -4,6 +4,7 @@ metadata:
   name: guacd
   labels: {{ include "calipsoplus-portal.labels" . | nindent 4 }}
 spec:
+  type: ClusterIP
   ports:
     - name: guacd
       port: {{ .Values.guacd.port }}

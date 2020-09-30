@@ -3,11 +3,11 @@ from calipsoplus.settings import *
 DEBUG = False
 CORS_ORIGIN_ALLOW_ALL = False
 
-ALLOWED_HOSTS = ['web-back']
+ALLOWED_HOSTS = ['backend']
 
-CORS_ORIGIN_WHITELIST = ['web-front','web-back']
+CORS_ORIGIN_WHITELIST = ['frontend','backend']
 
-DJANGO_ENV = 'DOCKER'
+DJANGO_ENV = 'KUBERNETES'
 
 # docker location
 DOCKER_URL_DAEMON = {{ .Values.calipsoplus.docker.host }}:{{ .Values.calipsoplus.docker.port }}

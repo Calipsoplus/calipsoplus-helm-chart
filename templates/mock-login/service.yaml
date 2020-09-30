@@ -5,9 +5,9 @@ metadata:
   labels: {{ include "calipsoplus-portal.labels" . | nindent 4 }}
 spec:
   ports:
-  - name: "8002"
-    port: 8002
-    targetPort: 8000
+    - name: "8002"
+      port: 8002
+      targetPort: 8000
   selector:
 status:
   loadBalancer: {}

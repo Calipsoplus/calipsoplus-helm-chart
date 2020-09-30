@@ -1,16 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: guacamole01  
+  name: guacamole
   labels: {{ include "calipsoplus-portal.labels" . | nindent 4 }}
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      {{- include "calipsoplus-portal.matchLabels" . | nindent 6 }}
   strategy:
     type: Recreate
   template:
     metadata:
-      creationTimestamp: null
       labels:
+        {{- include "calipsoplus-portal.matchLabels" . | nindent 8 }}
     spec:
       containers:
         - env:
@@ -28,10 +31,10 @@ spec:
               value: {{ .Values.guacamole.db.mysqlPassword }}
             - name: MYSQL_USER
               value: {{ .Values.guacamole.db.mysqlUser }}
-          image: guacamole/guacamole:1.0.0
-          name: guacamole01
+          image: "{{ .Values.guacamole.image.registry }}:{{ .Values.guacamole.image.tag }}"
+          name: guacamole
           ports:
-            - containerPort: 8080
+            - containerPort: {{ .Values.guacamole.targetPort }}
           resources: {}
           volumeMounts:
             - name: guac-script
@@ -43,5 +46,5 @@ spec:
             name: guacamole-script
             items:
               - key: guac_access.html
-              - path: index.html
+                path: index.html
 status: {}

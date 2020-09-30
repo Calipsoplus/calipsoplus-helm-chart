@@ -5,14 +5,16 @@ metadata:
   labels: {{ include "calipsoplus-portal.labels" . | nindent 4 }}
 spec:
   replicas: 1
-  strategy: {}
+  selector:
+    matchLabels:
+      {{- include "calipsoplus-portal.matchLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
         {{- include "calipsoplus-portal.selectorLabels" . | nindent 8 }}
     spec:
       containers:
-        - image: "{{ .Values.guacamole.guacd.image.repository }}:{{ .Values.guacd.image.tag }}"
+        - image: "{{ .Values.guacd.image.repository }}:{{ .Values.guacd.image.tag }}"
           name: guacd01
           ports:
             - containerPort: {{ .Values.guacd.targetPort }}

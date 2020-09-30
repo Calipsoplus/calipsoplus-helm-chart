@@ -2,24 +2,43 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend
-  labels: {{ include "calipsoplus-portal.labels" . | nindent 4 }}
+  labels:
+    {{- include "calipsoplus-portal.labels" . | nindent 4 }}
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      {{- include "calipsoplus-portal.matchLabels" . | nindent 6 }}
   strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
+        {{- include "calipsoplus-portal.matchLabels" . | nindent 8 }}
     spec:
       containers:
-        - args:
+        - name: django
+          args:
             - bash
             - -c
-            - python manage.py migrate && gunicorn calipsoplus.wsgi -b 0:{{ .Values.calipsoplus.backend.targetPort }}
-          image: "{{ .Values.calipsoplus.backend.image.repository }}:{{ .Values.calipsoplus.backend.image.tag || .Chart.AppVersion }}"
-          name: django01
+            - python manage.py migrate && gunicorn calipsoplus.wsgi -b 0:8081
+          image: "{{ .Values.calipsoplus.backend.image.repository }}:{{ .Values.calipsoplus.backend.image.tag | default .Chart.AppVersion }}"
           resources: {}
+          ports: 
+            - name: http
+              containerPort: 8081
+          volumeMounts:
+            - name: configs
+              mountPath: /secret/
       imagePullSecrets:
         - name: calipsoplus-registry-secret
-      restartPolicy: Always
+      nodeSelector: {{ toJson .Values.calipsoplus.backend.nodeSelector }}
+      volumes:
+        - name: configs
+          configMap:
+            name: backend-cm
+            items:
+              - key: default.cnf
+                path: default.cnf
+              - key: guacamole.cnf
+                path: guacamole.cnf
 status: {}

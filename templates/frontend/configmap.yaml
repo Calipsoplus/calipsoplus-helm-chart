@@ -1,8 +1,0 @@
-kind: Configmap
-apiVersion: v1
-metadata:
-  name: frontend-assets
-  labels: {{ include "calipsoplus-portal.labels" . | nindent 4 }}
-data:
-  environment.ts:
-    {{ .File }}

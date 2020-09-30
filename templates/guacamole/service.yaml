@@ -4,10 +4,11 @@ metadata:
   name: guacamole
   labels: {{ include "calipsoplus-portal.labels" . | nindent 4 }}
 spec:
+  type: ClusterIP
   ports:
-  - name: "8080"
-    port: 8080
-    targetPort: 8080
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
   selector:
 status:
   loadBalancer: {}

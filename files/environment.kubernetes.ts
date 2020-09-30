@@ -1,31 +1,39 @@
 export const environment = {
-  production: true,
+  production: false,
   servers: {
     api: {
-      url: 'https://calipsobackend.domain.tld/',
-      basehref: 'calipsoplus-services/'
+      url: '/',
+      basehref: 'services/'
     },
     guacamole: {
-      url: 'https://calipsoplus.desy.de/gacces/'
+      integrated_remote_desktop_viewer : {
+        enabled : false, // if true, the guacamole.url will be ignored as it isn't needed
+        security: false,
+        ignore_cert: true,
+        disable_auth: true,
+        cluster_url : 'cluster.local', // the server or cluster which contains all of the docker/kubernetes containers
+        websocket_server : 'ws://java-server.cluster.local:8080/ws'
+      },
+      url: '/guac/'
     },
     jupyterhub: {
       enabled: true,
-      url: 'https://jupyter.example.com'
+      url: 'https://eosc-pan-jhub.desy.de'
     }
   },
   auth: {
     oidc: {
-      enabled: {{ .Values.calipsoplus.oidc.enabled }},
-      url: {{ .Values.calipsoplus.oidc.url | quote }}
+      enabled: true,
+      url: 'https://keycloak.desy.de/auth/realms/kubernetes/protocol/openid-connect/auth'
     },
     useroffice: {
-      enabled: false,
-      url: 'https://USEROFFICE.URL'
-   }
+      enabled: true,
+      url: 'https://door.desy.de'
+    }
   },
   frontend: {
-    url: {{ .Values.calipsoplus.frontend.url | quote }},
-    facilityLogo: 'assets/images/logo.jpg'
+    url: 'http://frontend/',
+    facilityLogo: 'assets/images/desy-logo.jpg'
   },
-  env : 'kubernetes'
+  env: 'kubernetes'
 };

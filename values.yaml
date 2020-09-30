@@ -20,23 +20,27 @@ calipsoplus:
       # Overrides the image tag whose default is the chart appVersion.
       tag: ""
     port: 8001
-    targetPort: 8001
+    targetPort: 8000
   frontend:
-     url: example.com
-     image:
-       repository: eosc-pan-git.desy.de:5555/calipsoplus/portal-kubernetes/web-front
-       pullPolicy: IfNotPresent
-       # Overrides the image tag whose default is the chart appVersion.
-       tag: ""
+    url: example.com
+    image:
+      repository: eosc-pan-git.desy.de:5555/calipsoplus/portal-kubernetes/web-front
+      pullPolicy: IfNotPresent
+      # Overrides the image tag whose default is the chart appVersion.
+      tag: ""
     port: 8000
     targetPort: 8000
   db: 
+    database: calipsoplus
+    mysqlUser: calipso
+    mysqlPassword: calipsoplus
+    rootPassword: calipsoadmin
     image:
-      repository: eosc-pan-git.desy.de:5555/
+      repository: mysql
       pullPolicy: IfNotPresent
-      tag: ""
-    port: 3306
-    targetPort: 3307
+      tag: "5.7.31"
+    port: 3307
+    targetPort: 3306
   oidc: 
     enabled: false
     client:
@@ -60,7 +64,7 @@ jupyterhub:
 
 guacamole:
   db:
-    name:  guacamole
+    database: guacdb
     mysqlUser: guac
     mysqlPassword: guacamole
     rootPassword: guacadmin
@@ -68,16 +72,16 @@ guacamole:
       repository: mysql
       tag: '5.7.31'
     port: 3306
-    targetPort: 3307
+    targetPort: 3306
   image: 
     repository: guacamole/guacamole
-    tag: 1.2.0
-  port:
-  targetPort:
+    tag: '0.9.14'
+  port: 8080
+  targetPort: 8080
 guacd:
   image:
     repository: guacamole/guacd
-    tag: 1.2.0
+    tag: '0.9.14'
   port: 4822
   targetPort: 4822
 
@@ -102,10 +106,6 @@ securityContext: {}
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
   # runAsUser: 1000
-
-service:
-  type: ClusterIP
-  port: 80
 
 ingress:
   enabled: false

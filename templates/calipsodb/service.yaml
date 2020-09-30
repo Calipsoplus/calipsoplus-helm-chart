@@ -6,7 +6,7 @@ metadata:
 spec:
   ports:
     - name: database
-      port: {{ .Values.calipsplus.db.port }} 
+      port: {{ .Values.calipsoplus.db.port }} 
       targetPort: {{ .Values.calipsoplus.db.targetPort }}
   selector:
    {{ include "calipsoplus-portal.selectorLabels" . | nindent 4 }}

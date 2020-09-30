@@ -4,6 +4,14 @@ metadata:
   name: guacamoledb-scripts
   labels: {{ include "calipsoplus-portal.labels" . | nindent 4 }}
 data:
+  guacamole.cnf: |
+    [client]
+    database = {{ .Values.guacamole.db.database }}
+    host = guacamoledb
+    port = {{ .Values.guacamole.db.port }}
+    user = {{ .Values.guacamole.db.mysqlUser }}
+    password = {{ .Values.guacamole.db.mysqlPassword }}
+    default-character-set = utf8(base)
   guacamole.sql: |
     -- 
     -- Licensed to the Apache Software Foundation (ASF) under one 

@@ -30,17 +30,56 @@ Create chart name and version as used by the chart label.
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
-{{/*
-Common labels
+{{- /*
+  calipsoplus-portal.appLabel:
+    Used by "calipsoplus-portal.labels".
+*/}}
+{{- define "calipsoplus-portal.appLabel" -}}
+{{ .Values.nameOverride | default .Chart.Name | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
+
+{{- /*
+  calipsoplus-portal.componentLabel:
+    Used by "calipsoplus-portal.labels" and "calipsoplus-portal.nameField".
+
+    NOTE: The component label is determined by either...
+    - 1: The provided scope's .componentLabel
+    - 2: The template's filename if living in the root folder
+    - 3: The template parent folder's name
+    -  : ...and is combined with .componentPrefix and .componentSuffix
+*/}}
+{{- define "calipsoplus-portal.componentLabel" -}}
+{{- $file := .Template.Name | base | trimSuffix ".yaml" -}}
+{{- $parent := .Template.Name | dir | base | trimPrefix "templates" -}}
+{{- $component := .componentLabel | default $parent | default $file -}}
+{{- $component := print (.componentPrefix | default "") $component (.componentSuffix | default "") -}}
+{{ $component }}
+{{- end }}
+
+{{- /*
+  calipsoplus-portal.commonLabels:
+    Foundation for "calipsoplus-portal.labels".
+    Provides labels: app, release, (chart and heritage).
+*/}}
+{{- define "calipsoplus-portal.commonLabels" -}}
+app: {{ .appLabel | default (include "calipsoplus-portal.appLabel" .) }}
+release: {{ .Release.Name }}
+{{- if not .matchLabels }}
+chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+heritage: {{ .heritageLabel | default .Release.Service }}
+{{- end }}
+{{- end }}
+
+{{- /*
+  calipsoplus-portal.labels:
+    Provides labels: component, app, release, (chart and heritage).
 */}}
 {{- define "calipsoplus-portal.labels" -}}
-helm.sh/chart: {{ include "calipsoplus-portal.chart" . }}
-{{ include "calipsoplus-portal.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+component: {{ include "calipsoplus-portal.componentLabel" . }}
+{{ include "calipsoplus-portal.commonLabels" . }}
 {{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- end }}
+
 
 {{/*
 Selector labels
@@ -48,6 +87,15 @@ Selector labels
 {{- define "calipsoplus-portal.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "calipsoplus-portal.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
+{{- /*
+  calipsoplus-portal.matchLabels:
+    Used to provide pod selection labels: component, app, release.
+*/}}
+{{- define "calipsoplus-portal.matchLabels" -}}
+{{- $_ := merge (dict "matchLabels" true) . -}}
+{{ include "calipsoplus-portal.labels" $_ }}
 {{- end }}
 
 {{/*
