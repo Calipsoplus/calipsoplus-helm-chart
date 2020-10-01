@@ -11,11 +11,11 @@ spec:
   template:
     metadata:
       labels:
-        {{- include "calipsoplus-portal.selectorLabels" . | nindent 8 }}
+        {{- include "calipsoplus-portal.matchLabels" . | nindent 8 }}
     spec:
       containers:
         - image: "{{ .Values.guacd.image.repository }}:{{ .Values.guacd.image.tag }}"
-          name: guacd01
+          name: guacd
           ports:
             - containerPort: {{ .Values.guacd.targetPort }}
           resources: {}

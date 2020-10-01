@@ -14,7 +14,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        {{- include "calipsoplus-portal.selectorLabels" . | nindent 8 }}
+        {{- include "calipsoplus-portal.matchLabels" . | nindent 8 }}
     spec:
       containers:
         - args:
@@ -29,7 +29,7 @@ spec:
               value: {{ .Values.calipsoplus.db.rootPassword }}
             - name: MYSQL_USER
               value: {{ .Values.calipsoplus.db.mysqlUser }}
-          image: "{{ .Values.calipsoplus.db.image.registry }}:{{ .Values.calipsoplus.db.image.tag }}"
+          image: "{{ .Values.calipsoplus.db.image.repository }}:{{ .Values.calipsoplus.db.image.tag }}"
           name: calipso-mysql
           ports:
             - containerPort: 3306
@@ -37,6 +37,7 @@ spec:
           volumeMounts:
             - name: db-storage
               mountPath: /var/lib/mysql
+              subPath: mysql
             - name: db-scripts
               mountPath: /docker-entrypoint-initdb.d/
       restartPolicy: Always
@@ -50,6 +51,6 @@ spec:
           configMap:
             name: calipsodb-scripts
             items:
-              - key: calipsoplus.sql
+              - key: guacamole.sql
                 path: dump.sql
 status: {}

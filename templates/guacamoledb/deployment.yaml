@@ -39,10 +39,17 @@ spec:
         volumeMounts:
         - mountPath: /docker-entrypoint-initdb.d/dump.sql
           name: guacamoledb-data
+          subPath: mysql
       restartPolicy: Always
       serviceAccountName: ""
       volumes:
       - name: guacamoledb-data
         persistentVolumeClaim:
           claimName: guacamoledb-claim0
+      - name: db-scripts
+        configMap:
+          name: guacamoledb-scripts
+          items:
+          - key: calipsoplus.sql
+            path: dump.sql
 status: {}

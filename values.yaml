@@ -15,7 +15,7 @@ fullnameOverride: ""
 calipsoplus:
   backend:
     image:
-      repository: eosc-pan-git.desy.de:5555/calipsoplus/portal-kubernetes/web-back
+      repository: eosc-pan-git.desy.de:5555/calipsoplus/portal-kubernetes/backend
       pullPolicy: IfNotPresent
       # Overrides the image tag whose default is the chart appVersion.
       tag: ""
@@ -24,7 +24,7 @@ calipsoplus:
   frontend:
     url: example.com
     image:
-      repository: eosc-pan-git.desy.de:5555/calipsoplus/portal-kubernetes/web-front
+      repository: eosc-pan-git.desy.de:5555/calipsoplus/portal-kubernetes/frontend
       pullPolicy: IfNotPresent
       # Overrides the image tag whose default is the chart appVersion.
       tag: ""
@@ -75,18 +75,18 @@ guacamole:
     targetPort: 3306
   image: 
     repository: guacamole/guacamole
-    tag: '0.9.14'
+    tag: "0.9.14"
   port: 8080
   targetPort: 8080
 guacd:
   image:
     repository: guacamole/guacd
-    tag: '0.9.14'
+    tag: "0.9.14"
   port: 4822
   targetPort: 4822
 mocklogin:
   image: 
-    registry: eosc-pan-git.desy.de:5555/calipsoplus/mock-login
+    repository: eosc-pan-git.desy.de:5555/calipsoplus/portal-kubernetes/mock-login
     tag: ""
   port: 8000
   targetPort: 8080

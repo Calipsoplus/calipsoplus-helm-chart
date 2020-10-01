@@ -27,7 +27,7 @@ spec:
           volumeMounts:
             - name: assets
               mountPath: /assets/
-            - name: environment
+            - name: environment-cm
               mountPath: /src/environments/
       restartPolicy: Always
       imagePullSecrets:

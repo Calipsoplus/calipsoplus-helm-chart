@@ -31,7 +31,7 @@ spec:
               value: {{ .Values.guacamole.db.mysqlPassword }}
             - name: MYSQL_USER
               value: {{ .Values.guacamole.db.mysqlUser }}
-          image: "{{ .Values.guacamole.image.registry }}:{{ .Values.guacamole.image.tag }}"
+          image: "{{ .Values.guacamole.image.repository }}:{{ .Values.guacamole.image.tag }}"
           name: guacamole
           ports:
             - containerPort: {{ .Values.guacamole.targetPort }}

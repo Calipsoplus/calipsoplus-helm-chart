@@ -14,7 +14,7 @@ spec:
         {{- include "calipsoplus-portal.matchLabels" . | nindent 8 }}
     spec:
       containers:
-      - image: "{{ .Values.mocklogin.image.registry }}:{{ .Values.mocklogin.image.tag | default .Chart.AppVersion }}"
+      - image: "{{ .Values.mocklogin.image.repository }}:{{ .Values.mocklogin.image.tag | default .Chart.AppVersion }}"
         name: mocklogin
         ports:
         - containerPort: {{ .Values.mocklogin.targetPort }}
