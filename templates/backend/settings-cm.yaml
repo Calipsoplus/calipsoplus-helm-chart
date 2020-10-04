@@ -1,0 +1,13 @@
+    apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: settings-cm
+  labels: 
+    {{- include "calipsoplus-portal.labels" . | nindent 4 }}
+data:
+  calipso: |-
+    {{ .Files.Get "files/settings_calipso.py" | nindent 4 }}
+  kubernetes: |-
+    {{ .Files.Get "files/settings_kubernetes.py" | nindent 4 }}
+  settings:
+    {{ .Files.Get "files/settings.py" | nindent 4 }}

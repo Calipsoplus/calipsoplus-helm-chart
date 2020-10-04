@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: environment-cm
+  labels: 
+    {{- include "calipsoplus-portal.labels" . | nindent 4 }}
+data:
+  DOCKER_REMOTE_URL: "{{ .Values.calipsoplus.docker.host }}:{{ .Values.calipsoplus.docker.port }}"
+  REMOTE_MACHINE_IP: 
+  MOCKLOGIN_PORT: 
+  OIDC_RP_CLIENT_ID: {{ .Values.calipsoplus.oidc.client.id | quote }}
+  OIDC_RP_CLIENT_SECRET: {{ .Values.calipsoplus.oidc.client.secret | quote }}
+  OIDC_OP_AUTHORIZATION_ENDPOINT: {{ .Values.calipsoplus.oidc.client.authEndpoint | quote }}
+  OIDC_OP_TOKEN_ENDPOINT: {{ .Values.calipsoplus.oidc.client.tokenEndpoint | quote }}
+  OIDC_OP_USER_ENDPOINT: {{ .Values.calipsoplus.oidc.client.userEndpoint | quote }}
+  OIDC_OP_JWKS_ENDPOINT: {{ .Values.calipsoplus.oidc.client.jwksEndpoint | quote }}
+  OIDC_RP_SIGN_ALGO: {{ .Values.calipsoplus.oidc.client.signAlgo | quote }}
+  REDIRECT_AFTER_OIDC_URL: {{ .Values.calipsoplus.redirectUrl | quote }}
+  LOGOUT_REDIRECT_URL: {{ .Values.calipsoplus.logoutUrl | quote }}
+

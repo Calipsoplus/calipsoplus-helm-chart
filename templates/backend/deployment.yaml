@@ -18,27 +18,40 @@ spec:
       containers:
         - name: django
           args:
-            - bash
-            - -c
-            - python manage.py migrate && gunicorn calipsoplus.wsgi -b 0:8081
+          - bash
+          - -c
+          - python manage.py migrate && gunicorn calipsoplus.wsgi -b 0:{{ .Values.calipsoplus.backend.targetPort }}
           image: "{{ .Values.calipsoplus.backend.image.repository }}:{{ .Values.calipsoplus.backend.image.tag | default .Chart.AppVersion }}"
           resources: {}
           ports: 
-            - name: http
-              containerPort: 8081
+          - name: backend
+            containerPort: {{ .Values.calipsoplus.backend.targetPort }}
           volumeMounts:
-            - name: configs
-              mountPath: /secret/
+          - name: configs
+            mountPath: /secret/
+          - name: settings
+            mountPath: /src/calipsoplus/
+          envFrom:
+          - configMapRef:
+              name: environment-cm
       imagePullSecrets:
-        - name: calipsoplus-registry-secret
+      - name: calipsoplus-registry-secret
       nodeSelector: {{ toJson .Values.calipsoplus.backend.nodeSelector }}
       volumes:
-        - name: configs
-          configMap:
-            name: backend-cm
-            items:
-              - key: default.cnf
-                path: default.cnf
-              - key: guacamole.cnf
-                path: guacamole.cnf
+      - name: configs
+        configMap:
+          name: backend-cm
+          items:
+          - key: default.cnf
+            path: default.cnf
+          - key: guacamole.cnf
+            path: guacamole.cnf
+      - name: settings
+        configMap: 
+          name: settings-cm
+          items:
+           - key: calipso
+             path: settings_calipso.py
+           - key: kubernetes
+             path: settings_kubernetes.py
 status: {}
