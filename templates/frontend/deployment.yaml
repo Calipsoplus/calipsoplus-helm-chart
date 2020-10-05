@@ -19,16 +19,18 @@ spec:
             - npm
             - start
           image: "{{ .Values.calipsoplus.frontend.image.repository }}:{{ .Values.calipsoplus.frontend.image.tag | default .Chart.AppVersion }}"
-          name: angular01
+          name: angular
           resources: {}
           ports: 
             - name: http
               containerPort: {{ .Values.calipsoplus.frontend.targetPort }}
           volumeMounts:
             - name: assets
-              mountPath: /assets/
+              mountPath: /ng-app/src/assets/images/desy-logo.jpg
+              subPath: desy-logo.jpg
             - name: environment-cm
-              mountPath: /src/environments/
+              mountPath: /ng-app/src/environments/environment.kubernetes.ts
+              subPath: environment.kubernetes.ts
       restartPolicy: Always
       imagePullSecrets:
         - name: calipsoplus-registry-secret
@@ -39,11 +41,11 @@ spec:
             name: frontend-assets-cm
             items:
               - key: logo.jpg
-                path: logo.jpg
+                path: desy-logo.jpg
         - name: environment-cm
           configMap:
             name: frontend-environment-cm
             items:
               - key: environment.kubernetes.ts
-                path: environment.ts
+                path: environment.kubernetes.ts
 status: {}

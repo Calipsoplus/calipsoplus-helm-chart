@@ -20,17 +20,17 @@ spec:
             - name: DATABASE_PORT
               value: {{ .Values.guacamole.db.port | quote }}
             - name: GUACD_HOSTNAME
-              value: guacd
+              value: "guacd"
             - name: GUACD_PORT
               value: {{ .Values.guacd.port | quote }}
             - name: MYSQL_DATABASE
-              value: {{ .Values.guacamole.db.name }}
+              value: {{ .Values.guacamole.db.database | quote }}
             - name: MYSQL_HOSTNAME
-              value: db-guacamole
+              value: "guacamoledb"
             - name: MYSQL_PASSWORD
-              value: {{ .Values.guacamole.db.mysqlPassword }}
+              value: {{ .Values.guacamole.db.mysqlPassword | quote }}
             - name: MYSQL_USER
-              value: {{ .Values.guacamole.db.mysqlUser }}
+              value: {{ .Values.guacamole.db.mysqlUser | quote }}
           image: "{{ .Values.guacamole.image.repository }}:{{ .Values.guacamole.image.tag }}"
           name: guacamole
           ports:

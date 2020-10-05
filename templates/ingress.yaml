@@ -22,21 +22,19 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-    {{- range .Values.ingress.hosts }}
-    - host: {{ .host | quote }}
+    - host: {{ .Values.ingress.host | quote }}
       http:
         paths:
           - path: /
             backend:
               serviceName: frontend
-              servicePort: 8001
+              servicePort: {{ .Values.calipsoplus.frontend.port }}
           - path: /services/
             backend:
               serviceName: backend
-              servicePort: 8000
+              servicePort: {{ .Values.calipsoplus.backend.port }}
           - path: /guac/
             backend:
               serviceName: guacamole
-              servicePort: 8080
-    {{- end }}
+              servicePort: {{ .Values.guacd.port }}
   {{- end }}

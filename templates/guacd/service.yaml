@@ -10,5 +10,6 @@ spec:
       port: {{ .Values.guacd.port }}
       targetPort: {{ .Values.guacd.targetPort }}
   selector:
+   {{- include "calipsoplus-portal.matchLabels" . | nindent 4 }}
 status:
   loadBalancer: {}

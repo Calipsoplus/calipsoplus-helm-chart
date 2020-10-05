@@ -5,16 +5,19 @@ metadata:
   labels: 
     {{- include "calipsoplus-portal.labels" . | nindent 4 }}
 data:
-  DOCKER_REMOTE_URL: "{{ .Values.calipsoplus.docker.host }}:{{ .Values.calipsoplus.docker.port }}"
-  REMOTE_MACHINE_IP: 
-  MOCKLOGIN_PORT: 
+  DOCKER_URL_DAEMON: "{{ .Values.calipsoplus.docker.host }}:{{ .Values.calipsoplus.docker.port }}"
+  REMOTE_MACHINE_IP: {{ .Values.calipsoplus.docker.host | quote }}
+  MOCKLOGIN_PORT:  {{ .Values.mocklogin.port | quote }}
   OIDC_RP_CLIENT_ID: {{ .Values.calipsoplus.oidc.client.id | quote }}
   OIDC_RP_CLIENT_SECRET: {{ .Values.calipsoplus.oidc.client.secret | quote }}
   OIDC_OP_AUTHORIZATION_ENDPOINT: {{ .Values.calipsoplus.oidc.client.authEndpoint | quote }}
   OIDC_OP_TOKEN_ENDPOINT: {{ .Values.calipsoplus.oidc.client.tokenEndpoint | quote }}
   OIDC_OP_USER_ENDPOINT: {{ .Values.calipsoplus.oidc.client.userEndpoint | quote }}
   OIDC_OP_JWKS_ENDPOINT: {{ .Values.calipsoplus.oidc.client.jwksEndpoint | quote }}
-  OIDC_RP_SIGN_ALGO: {{ .Values.calipsoplus.oidc.client.signAlgo | quote }}
+  OIDC_RP_SIGN_ALGO: {{ .Values.calipsoplus.oidc.client.signAlgorithm | quote }}
   REDIRECT_AFTER_OIDC_URL: {{ .Values.calipsoplus.redirectUrl | quote }}
   LOGOUT_REDIRECT_URL: {{ .Values.calipsoplus.logoutUrl | quote }}
-
+  UID_GID_API_URL: {{ .Values.calipsoplus.uidGidApiUrl | quote }}
+  DEFAULT_KUBE_NAMESPACE: {{ .Release.Namespace | quote }}
+  OTHER_DIRS_TO_MOUNT: {{ .Values.calipsoplus.extraMountDirs | quote }}
+  REMOTE_PODS_MACHINE_IP: {{ .Values.calipsoplus.remotePodsMachineIp | quote }}

@@ -22,13 +22,13 @@ spec:
             - --default-authentication-plugin=mysql_native_password
           env:
             - name: MYSQL_DATABASE
-              value: calipsoplus
+              value: {{ .Values.calipsoplus.db.database | quote }}
             - name: MYSQL_PASSWORD
-              value: {{ .Values.calipsoplus.db.mysqlPassword }}
+              value: {{ .Values.calipsoplus.db.mysqlPassword | quote }}
             - name: MYSQL_ROOT_PASSWORD
-              value: {{ .Values.calipsoplus.db.rootPassword }}
+              value: {{ .Values.calipsoplus.db.rootPassword | quote }}
             - name: MYSQL_USER
-              value: {{ .Values.calipsoplus.db.mysqlUser }}
+              value: {{ .Values.calipsoplus.db.mysqlUser | quote }}
           image: "{{ .Values.calipsoplus.db.image.repository }}:{{ .Values.calipsoplus.db.image.tag }}"
           name: calipso-mysql
           ports:
@@ -51,6 +51,6 @@ spec:
           configMap:
             name: calipsodb-scripts
             items:
-              - key: guacamole.sql
+              - key: calipsoplus.sql
                 path: dump.sql
 status: {}

@@ -9,5 +9,5 @@ data:
     {{ .Files.Get "files/settings_calipso.py" | nindent 4 }}
   kubernetes: |-
     {{ .Files.Get "files/settings_kubernetes.py" | nindent 4 }}
-  settings:
+  settings: |-
     {{ .Files.Get "files/settings.py" | nindent 4 }}

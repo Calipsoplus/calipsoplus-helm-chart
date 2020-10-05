@@ -23,13 +23,13 @@ spec:
         - --default-authentication-plugin=mysql_native_password
         env:
         - name: MYSQL_DATABASE
-          value: {{ .Values.guacamole.db.database }}
+          value: {{ .Values.guacamole.db.database | quote }}
         - name: MYSQL_PASSWORD
-          value: {{ .Values.guacamole.db.mysqlPassword }}
+          value: {{ .Values.guacamole.db.mysqlPassword | quote }}
         - name: MYSQL_ROOT_PASSWORD
-          value: {{ .Values.guacamole.db.mysqlRootPassword }}
+          value: {{ .Values.guacamole.db.rootPassword | quote }}
         - name: MYSQL_USER
-          value: {{ .Values.guacamole.db.mysqlUser }}
+          value: {{ .Values.guacamole.db.mysqlUser | quote }}
         image: "{{ .Values.guacamole.db.image.repository }}:{{ .Values.guacamole.db.image.tag }}"
         imagePullPolicy: "{{ .Values.guacamole.db.image.pullPolicy }}"
         name: mysql0-guacd
@@ -37,9 +37,11 @@ spec:
         - containerPort: {{ .Values.guacamole.db.targetPort }}
         resources: {}
         volumeMounts:
-        - mountPath: /docker-entrypoint-initdb.d/dump.sql
+        - mountPath: /var/lib/mysql
           name: guacamoledb-data
           subPath: mysql
+        - name: db-scripts
+          mountPath: /docker-entrypoint-initdb.d/
       restartPolicy: Always
       serviceAccountName: ""
       volumes:
@@ -50,6 +52,6 @@ spec:
         configMap:
           name: guacamoledb-scripts
           items:
-          - key: calipsoplus.sql
+          - key: guacamole.sql
             path: dump.sql
 status: {}

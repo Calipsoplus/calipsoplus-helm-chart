@@ -242,27 +242,23 @@ LOCAL_ACCESS_PASSWORD = access_conf['password']
 CORS_ALLOW_CREDENTIALS = True
 
 # Open ID Connect Enabled
-{{ if .Values.calipsoplus.oidc.enabled }}
 OIDC_ENABLED = True
-{{ else }}
-OIDC_ENABLED = False
-{{ end }}
 # Open ID Connect credentials
-OIDC_RP_CLIENT_ID = {{ .Values.calispoplus.oidc.client.id | quote }}
-OIDC_RP_CLIENT_SECRET = {{ .Values.calipsoplus.oidc.client.secret | quote }}
-OIDC_OP_AUTHORIZATION_ENDPOINT = {{ .Values.calipsoplus.oidc.client.authEndpoint | quote }}
-OIDC_OP_TOKEN_ENDPOINT = {{ .Values.calipsoplus.oidc.client.tokenEndpoint | quote }}
-OIDC_OP_USER_ENDPOINT = {{ .Values.calipsoplus.oidc.client.userEndpoint | quote }}
-OIDC_OP_JWKS_ENDPOINT = {{ .Values.calipsoplus.oidc.client.jwksEndpoint | quote }}
-OIDC_RP_SIGN_ALGO = {{ .Values.calipsoplus.oidc.client.signAlgorithm }}  # RS256 or HS256 (check your provider)
+OIDC_RP_CLIENT_ID = os.environ["OIDC_RP_CLIENT_ID"]
+OIDC_RP_CLIENT_SECRET = os.environ["OIDC_RP_CLIENT_SECRET"]
+OIDC_OP_AUTHORIZATION_ENDPOINT = os.environ["OIDC_OP_AUTHORIZATION_ENDPOINT"]
+OIDC_OP_TOKEN_ENDPOINT = os.environ["OIDC_OP_TOKEN_ENDPOINT"]
+OIDC_OP_USER_ENDPOINT = os.environ["OIDC_OP_USER_ENDPOINT"]
+OIDC_OP_JWKS_ENDPOINT = os.environ["OIDC_OP_JWKS_ENDPOINT"]
+OIDC_RP_SIGN_ALGO = os.environ["OIDC_RP_SIGN_ALGO"]  # RS256 or HS256 (check your provider)
 
 # Keep this method or modify it. By default, the username is determined by hashing the email address
 OIDC_USERNAME_ALGO = 'apprest.openidconnect.username_helper.generate_username'
 
 # URL to the front end experiment page. After the user has authenticated, they will be redirected to this page in the
 # frontend
-REDIRECT_AFTER_OIDC_URL = {{ .Values.calipsoplus.oidc.redirectUrl | quote }}
+REDIRECT_AFTER_OIDC_URL = os.environ["REDIRECT_AFTER_OIDC_URL"]
 
 # URL to the calipsoplus home page. After the user has logged out, they should be redirected here. (Does not require
 # authentication)
-LOGOUT_REDIRECT_URL = {{ .Values.calipsoplus.logoutUrl | quote }}
+LOGOUT_REDIRECT_URL = os.environ["LOGOUT_REDIRECT_URL"]

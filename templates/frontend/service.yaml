@@ -10,6 +10,6 @@ spec:
       port: {{ .Values.calipsoplus.frontend.port }}
       targetPort: {{ .Values.calipsoplus.frontend.targetPort }}
   selector:
-   {{ include "calipsoplus-portal.selectorLabels" . | nindent 4 }}
+   {{- include "calipsoplus-portal.matchLabels" . | nindent 4 }}
 status:
   loadBalancer: {}

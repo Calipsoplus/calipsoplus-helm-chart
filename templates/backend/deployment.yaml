@@ -28,9 +28,16 @@ spec:
             containerPort: {{ .Values.calipsoplus.backend.targetPort }}
           volumeMounts:
           - name: configs
-            mountPath: /secret/
+            mountPath: /secret
           - name: settings
-            mountPath: /src/calipsoplus/
+            mountPath: /src/calipsoplus/settings_calipso.py
+            subPath: settings_calipso.py
+          - name: settings
+            mountPath: /src/calipsoplus/settings_kubernetes.py
+            subPath: settings_kubernetes.py
+          - name: settings
+            mountPath: /src/calipsoplus/settings.py
+            subPath: settings.py
           envFrom:
           - configMapRef:
               name: environment-cm
@@ -50,8 +57,10 @@ spec:
         configMap: 
           name: settings-cm
           items:
-           - key: calipso
-             path: settings_calipso.py
-           - key: kubernetes
-             path: settings_kubernetes.py
+            - key: calipso
+              path: settings_calipso.py
+            - key: kubernetes
+              path: settings_kubernetes.py
+            - key: settings
+              path: settings.py
 status: {}

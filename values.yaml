@@ -19,7 +19,7 @@ calipsoplus:
       pullPolicy: IfNotPresent
       # Overrides the image tag whose default is the chart appVersion.
       tag: ""
-    port: 8001
+    port: 8000
     targetPort: 8000
   frontend:
     url: example.com
@@ -28,8 +28,8 @@ calipsoplus:
       pullPolicy: IfNotPresent
       # Overrides the image tag whose default is the chart appVersion.
       tag: ""
-    port: 8000
-    targetPort: 8000
+    port: 8001
+    targetPort: 8001
   db: 
     database: calipsoplus
     mysqlUser: calipso
@@ -54,6 +54,9 @@ calipsoplus:
       signAlgorithm: 'HS256'
   redirectUrl: 'https://calipsoplus.example.com/navigation'
   logoutUrl: 'https://calipsoplus.example.com'
+  uidGidApiUrl: 'ldap-api.default.svc.cluster.local'
+  extraMountDirs: ""
+  remotePodsMachineIp: 'cluster.local'
   docker:
     host: 'calipso-docker-host.example.com'
     port: '2375'
@@ -118,9 +121,7 @@ ingress:
   annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: chart-example.local
-      paths: []
+  host: chart-example.local
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:

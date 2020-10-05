@@ -1,3 +1,5 @@
+import os
+
 # define generic quota per user
 MAX_RESOURCES_PER_USER = 5
 MAX_RAM_PER_USER = "30G"
@@ -24,7 +26,7 @@ EXPERIMENTS_DATASETS_ROOT = "/tmp/data"
 EXPERIMENTS_OUTPUT = "/tmp/results"
 
 # which indicates whether getting the information from a REST endpoint (1) or the DB (0)
-MOCKLOGIN_PORT = os.environ("MOCKLOGIN_PORT")
+MOCKLOGIN_PORT = os.environ["MOCKLOGIN_PORT"]
 DYNAMIC_EXPERIMENTS_DATA_RETRIEVAL = 0
 DYNAMIC_EXPERIMENTS_DATA_RETRIEVAL_ENDPOINT = f"http://mock-login:{MOCKLOGIN_PORT}experiments/$USERNAME/"
 
@@ -46,4 +48,9 @@ ENABLE_NON_ROOT_GID_CONTAINER = False
 # the path to the user's home.
 ADD_HOME_DIR_TO_ALL_CONTAINERS = False
 
-API_URL_FOR_UID_AND_GID = os.environ("UID_GID_API_URL")
+API_URL_FOR_UID_AND_GID = os.environ["UID_GID_API_URL"]
+
+# Kubernetes Settings
+DEFAULT_KUBE_NAMESPACE = os.environ['DEFAULT_KUBE_NAMESPACE']
+OTHER_DIRS_TO_MOUNT = os.environ['OTHER_DIRS_TO_MOUNT']
+REMOTE_PODS_MACHINE_IP = os.environ['REMOTE_PODS_MACHINE_IP']
