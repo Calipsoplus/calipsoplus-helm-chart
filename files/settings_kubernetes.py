@@ -6,9 +6,10 @@ CORS_ORIGIN_ALLOW_ALL = False
 
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
-
+USE_X_FORWARDED_PORT = True
 USE_X_FORWARDED_HOST = True
-FORCE_SCRIPT_NAME = '/services'
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
 
 ALLOWED_HOSTS = ['calipsoplus.desy.de', 
                  'backend.calipsoplus.svc.cluster.local', 
@@ -45,6 +46,9 @@ REMOTE_MACHINE_IP = os.environ["REMOTE_MACHINE_IP"]
 
 # Port of mocklogin
 MOCKLOGIN_PORT = os.environ["MOCKLOGIN_PORT"]
+
+# OIDC callback URL
+OIDC_AUTHENTICATION_CALLBACK_URL = os.environ["OIDC_AUTHENTICATION_CALLBACK_URL"]
 
 # logs
 LOGGING['loggers']['django']['handlers'] = ['console']
