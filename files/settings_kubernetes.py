@@ -20,6 +20,10 @@ ALLOWED_HOSTS = ['calipsoplus.desy.de',
                  'frontend.calipsoplus.svc',
                  'frontend.calipsoplus',
                  'frontend',
+                 'proxy.calipsoplus.svc.cluster.local',
+                 'proxy.calipsoplus.svc',
+                 'proxy.calipsoplus',
+                 'proxy',
 ]
 
 CORS_ORIGIN_WHITELIST = [
@@ -46,9 +50,6 @@ REMOTE_MACHINE_IP = os.environ["REMOTE_MACHINE_IP"]
 
 # Port of mocklogin
 MOCKLOGIN_PORT = os.environ["MOCKLOGIN_PORT"]
-
-# OIDC callback URL
-OIDC_AUTHENTICATION_CALLBACK_URL = os.environ["OIDC_AUTHENTICATION_CALLBACK_URL"]
 
 # logs
 LOGGING['loggers']['django']['handlers'] = ['console']

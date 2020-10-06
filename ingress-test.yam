@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/app-root: /services
+    cert-manager.io/cluster-issuer: letsencrypt-prod-lb
+    meta.helm.sh/release-name: calipsoplus-portal
+    meta.helm.sh/release-namespace: calipsoplus
+  labels:
+    app: calipsoplus-portal
+    app.kubernetes.io/managed-by: Helm
+    chart: calipsoplus-portal-0.5.26-debug
+    component: ingress
+    heritage: Helm
+    io.cattle.field/appId: calipsoplus-portal
+    release: calipsoplus-portal
+  name: calipso-oidc
+  namespace: calipsoplus
+spec:
+  rules:
+  - host: calipsoplus.desy.de
+    http:
+      paths:
+      - backend:
+          serviceName: backend
+          servicePort: 8000
+        path: /oidc
+  tls:
+  - hosts:
+    - calipsoplus.desy.de
+    secretName: calipsoplus-ingress-tls
+

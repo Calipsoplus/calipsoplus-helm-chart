@@ -13,6 +13,11 @@ nameOverride: ""
 fullnameOverride: ""
 
 calipsoplus:
+  proxy:
+    enabled: true
+    image:
+      repository: nginx
+      tag: "1.18"
   backend:
     image:
       repository: eosc-pan-git.desy.de:5555/calipsoplus/portal-kubernetes/backend
@@ -103,6 +108,10 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
+service:
+  type: ClusterIP
+  port: 80
+
 podAnnotations: {}
 
 podSecurityContext: {}
@@ -121,7 +130,9 @@ ingress:
   annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
-  host: chart-example.local
+  hosts:
+  - host: chart-example.local
+    paths: [] 
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:

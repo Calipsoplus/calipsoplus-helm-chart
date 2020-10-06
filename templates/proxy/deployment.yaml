@@ -1,0 +1,47 @@
+{{- if .Values.calipsoplus.proxy.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proxy
+  labels:
+    {{- include "calipsoplus-portal.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "calipsoplus-portal.matchLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "calipsoplus-portal.matchLabels" . | nindent 8 }}
+    spec:
+      imagePullSecrets:
+      - name: calipsoplus-registry-secret
+      containers:
+        - name: nginx
+          image: "{{ .Values.calipsoplus.proxy.image.repository }}:{{ .Values.calipsoplus.proxy.image.tag }}"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          volumeMounts:
+          - name: proxy-conf
+            mountPath: /etc/nginx/conf.d/default.conf
+            subPath: nginx.conf
+      volumes:
+      - name: proxy-conf
+        configMap:
+          name: proxy-cm
+          items:
+            - key: config
+              path: nginx.conf
+{{- end }}

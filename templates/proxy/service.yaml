@@ -1,0 +1,15 @@
+{{- if .Values.calipsoplus.proxy.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: proxy
+  labels: {{ include "calipsoplus-portal.labels" . | nindent 4 }}
+spec:
+  type:  {{ .Values.service.type }}
+  ports:
+  - name: proxy
+    port: {{ .Values.service.port }}
+    targetPort: 80
+  selector:
+   {{- include "calipsoplus-portal.matchLabels" . | nindent 4 }}
+{{- end }}
