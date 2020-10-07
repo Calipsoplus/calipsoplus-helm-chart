@@ -1,3 +1,4 @@
+{{- if .Values.mocklogin.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -6,8 +7,9 @@ metadata:
 spec:
   ports:
     - name: login
-      port: {{ .Values.mocklogin.port }}
-      targetPort: {{ .Values.mocklogin.targetPort }}
+      port: {{ .Values.mocklogin.service.port }}
+      targetPort: {{ .Values.mocklogin.service.targetPort }}
   selector:
 status:
   loadBalancer: {}
+{{- end }}
