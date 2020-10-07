@@ -1,0 +1,71 @@
+{{- if and .Values.ingress.enabled (not .Values.calipsoplus.proxy.enabled) -}}
+{{- $svcPort := .Values.service.port -}}
+{{- $fullName := include "calipsoplus-portal.fullname" . -}}
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "calipsoplus-portal.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if .Values.ingress.tls }}
+  tls:
+    {{- range .Values.ingress.tls }}
+    - hosts:
+        {{- range .hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .secretName }}
+    {{- end }}
+  {{- end }}
+  rules:
+    - host: {{ (index .Values.ingress.hosts 0).host | quote }}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: frontend
+              servicePort: {{ .Values.calipsoplus.frontend.port }}
+          - path: /oidc
+            backend:
+              serviceName: backend
+              servicePort: {{ .Values.calipsoplus.backend.port }}
+          - path: /guacamole
+            backend:
+              serviceName: guacamole
+              servicePort: {{ .Values.guacamole.port }}
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata: 
+  labels:
+    {{- include "calipsoplus-portal.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  {{- if .Values.ingress.tls }}
+  tls:
+    {{- range .Values.ingress.tls }}
+    - hosts:
+        {{- range .hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .secretName }}
+    {{- end }}
+  {{- end }}
+  rules:
+    - host: {{ (index .Values.ingress.hosts 0).host }}
+      http:
+        paths:
+          - path: /services(/|$)(.*)
+            backend:
+              serviceName: backend
+              servicePort: {{ .Values.calipsoplus.backend.port }}
+{{- end }}

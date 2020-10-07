@@ -257,7 +257,7 @@ OIDC_USERNAME_ALGO = 'apprest.openidconnect.username_helper.generate_username'
 
 # URL to the front end experiment page. After the user has authenticated, they will be redirected to this page in the
 # frontend
-REDIRECT_AFTER_OIDC_URL = os.environ["REDIRECT_AFTER_OIDC_URL"]
+LOGIN_REDIRECT_URL = os.environ["LOGIN_REDIRECT_URL"]
 
 # URL to the calipsoplus home page. After the user has logged out, they should be redirected here. (Does not require
 # authentication)

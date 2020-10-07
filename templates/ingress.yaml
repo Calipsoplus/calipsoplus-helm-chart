@@ -23,6 +23,7 @@ spec:
     {{- end }}
   {{- end }}
   rules:
+  {{- if .Values.calipsoplus.proxy.enabled -}}
     {{- range .Values.ingress.hosts }}
     - host: {{ .host | quote }}
       http:
@@ -34,4 +35,6 @@ spec:
               servicePort: {{ $svcPort }}
           {{- end }}
     {{- end }}
+  {{- else }}
+  {{- end }}
 {{- end }}

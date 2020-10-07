@@ -15,7 +15,7 @@ data:
   OIDC_OP_USER_ENDPOINT: {{ .Values.calipsoplus.oidc.client.userEndpoint | quote }}
   OIDC_OP_JWKS_ENDPOINT: {{ .Values.calipsoplus.oidc.client.jwksEndpoint | quote }}
   OIDC_RP_SIGN_ALGO: {{ .Values.calipsoplus.oidc.client.signAlgorithm | quote }}
-  REDIRECT_AFTER_OIDC_URL: {{ .Values.calipsoplus.redirectUrl | quote }}
+  LOGIN_REDIRECT_URL: {{ .Values.calipsoplus.redirectUrl | quote }}
   LOGOUT_REDIRECT_URL: {{ .Values.calipsoplus.logoutUrl | quote }}
   UID_GID_API_URL: {{ .Values.calipsoplus.uidGidApiUrl | quote }}
   DEFAULT_KUBE_NAMESPACE: {{ .Release.Namespace | quote }}

@@ -14,7 +14,7 @@ fullnameOverride: ""
 
 calipsoplus:
   proxy:
-    enabled: true
+    enabled: false
     image:
       repository: nginx
       tag: "1.18"

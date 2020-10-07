@@ -2,7 +2,7 @@ export const environment = {
   production: false,
   servers: {
     api: {
-      url: 'https://calipsoplus.desy.de',
+      url: '/',
       basehref: '/services/'
     },
     guacamole: {
@@ -32,7 +32,7 @@ export const environment = {
     }
   },
   frontend: {
-    url: 'https://calipsoplus.desy.de',
+    url: 'https://calipsoplus.desy.de/',
     facilityLogo: '/assets/images/desy-logo.jpg'
   },
   env: 'kubernetes'
