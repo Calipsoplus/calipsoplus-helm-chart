@@ -9,24 +9,24 @@ CSRF_COOKIE_SECURE = True
 USE_X_FORWARDED_PORT = True
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-#SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = True
 
-ALLOWED_HOSTS = ['calipsoplus.desy.de', 
-                 'backend.calipsoplus.svc.cluster.local', 
-                 'backend.calipsoplus.svc',
-                 'backend.calipsoplus',
+ALLOWED_HOSTS = ['backend.{{ .Release.Namespace }}.svc.cluster.local', 
+                 'backend.{{ .Release.Namespace }}.svc',
+                 'backend.{{ .Release.Namespace }}',
                  'backend',
-                 'frontend.calipsoplus.svc.cluster.local',
-                 'frontend.calipsoplus.svc',
-                 'frontend.calipsoplus',
+                 'frontend.{{ .Release.Namespace }}.svc.cluster.local',
+                 'frontend.{{ .Release.Namespace }}.svc',
+                 'frontend.{{ .Release.Namespace }}',
                  'frontend',
-                 'proxy.calipsoplus.svc.cluster.local',
-                 'proxy.calipsoplus.svc',
-                 'proxy.calipsoplus',
+                 'proxy.{{ .Release.Namespace }}.svc.cluster.local',
+                 'proxy.{{ .Release.Namespace }}.svc',
+                 'proxy.{{ .Release.Namespace }}',
                  'proxy',
 ]
 
 CORS_ORIGIN_WHITELIST = [
+     'keycloak.desy.de',
 	 'calipsoplus.desy.de',
 	 'frontend.calipsoplus.svc.cluster.local',
 	 'backend.calipsoplus.svc.cluster.local',
@@ -41,8 +41,8 @@ CSRF_TRUSTED_ORIGINS = [ '.desy.de' ]
 
 DJANGO_ENV = 'KUBERNETES'
 
-#os.environ['HTTPS'] = "on"
-#os.environ['wsgi.url_scheme'] = 'https'
+os.environ['HTTPS'] = "on"
+os.environ['wsgi.url_scheme'] = 'https'
 
 # docker location
 DOCKER_URL_DAEMON = os.environ["DOCKER_URL_DAEMON"]

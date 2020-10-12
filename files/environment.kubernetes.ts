@@ -3,7 +3,7 @@ export const environment = {
   servers: {
     api: {
       url: '/',
-      basehref: '/services/'
+      basehref: 'services/'
     },
     guacamole: {
       integrated_remote_desktop_viewer : {
@@ -17,23 +17,23 @@ export const environment = {
       url: '/guac'
     },
     jupyterhub: {
-      enabled: true,
-      url: 'https://eosc-pan-jhub.desy.de'
+      enabled: {{ .Values.jupyterhub.enabled }},
+      url: {{ .Values.jupyterhub.url | quote }}
     }
   },
   auth: {
     oidc: {
       enabled: true,
-      url: '/services/oidc/authenticate'
+      url: 'services/oidc/authenticate'
     },
     useroffice: {
-      enabled: true,
-      url: 'https://door.desy.de'
+      enabled: {{ .Values.userOffice.enabled }},
+      url: {{ .Values.userOffice.url | quote }}
     }
   },
   frontend: {
-    url: 'https://calipsoplus.desy.de/',
-    facilityLogo: '/assets/images/desy-logo.jpg'
+    url: '/',
+    facilityLogo: 'assets/images/facility-logo.png'
   },
   env: 'kubernetes'
 };

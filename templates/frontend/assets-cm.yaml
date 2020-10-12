@@ -5,5 +5,5 @@ metadata:
   labels:
     {{- include "calipsoplus-portal.labels" . | nindent 4 }}
 binaryData:
-  logo.jpg:
-    {{ .Files.Get "files/desy-logo.jpg" | b64enc }}
+  logo:
+    {{ .Files.Get "files/facility-logo.png" | b64enc }}

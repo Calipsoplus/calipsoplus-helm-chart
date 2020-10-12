@@ -6,4 +6,4 @@ metadata:
     {{- include "calipsoplus-portal.labels" . | nindent 4 }}
 data:
   environment.kubernetes.ts: |
-    {{ .Files.Get "files/environment.kubernetes.ts" | nindent 4 }}
+{{ tpl (.Files.Get "files/environment.kubernetes.ts") . | indent 4 }}

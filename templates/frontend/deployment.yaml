@@ -26,8 +26,8 @@ spec:
               containerPort: {{ .Values.calipsoplus.frontend.targetPort }}
           volumeMounts:
             - name: assets
-              mountPath: /ng-app/src/assets/images/desy-logo.jpg
-              subPath: desy-logo.jpg
+              mountPath: /ng-app/src/assets/images/facility-logo.jpg
+              subPath: facility-logo.jpg
             - name: environment-cm
               mountPath: /ng-app/src/environments/environment.kubernetes.ts
               subPath: environment.kubernetes.ts
@@ -40,8 +40,8 @@ spec:
           configMap:
             name: frontend-assets-cm
             items:
-              - key: logo.jpg
-                path: desy-logo.jpg
+              - key: logo
+                path: facility-logo.png
         - name: environment-cm
           configMap:
             name: frontend-environment-cm

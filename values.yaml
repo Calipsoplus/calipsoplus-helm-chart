@@ -100,6 +100,10 @@ mocklogin:
     port: 8000
     targetPort: 8080
 
+userOffice:
+  enabled: false
+  url: https://useroffice.example.com
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true

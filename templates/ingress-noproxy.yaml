@@ -34,7 +34,7 @@ spec:
             backend:
               serviceName: backend
               servicePort: {{ .Values.calipsoplus.backend.port }}
-          - path: /guacamole
+          - path: /guac
             backend:
               serviceName: guacamole
               servicePort: {{ .Values.guacamole.port }}

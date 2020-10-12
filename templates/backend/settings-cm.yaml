@@ -5,9 +5,9 @@ metadata:
   labels: 
     {{- include "calipsoplus-portal.labels" . | nindent 4 }}
 data:
-  calipso: |-
-    {{ .Files.Get "files/settings_calipso.py" | nindent 4 }}
-  kubernetes: |-
-    {{ .Files.Get "files/settings_kubernetes.py" | nindent 4 }}
-  settings: |-
-    {{ .Files.Get "files/settings.py" | nindent 4 }}
+  calipso: |
+{{ .Files.Get "files/settings_calipso.py" | indent 4 }}
+  kubernetes: |
+{{  tpl (.Files.Get "files/settings_kubernetes.py") . | indent 4 }}
+  settings: |
+{{ .Files.Get "files/settings.py" | indent 4 }}
